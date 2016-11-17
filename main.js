@@ -39,11 +39,24 @@ module.exports.loop = function () {
         const minUpgraders  = Memory.phaseSettings.minUpgraders;
 
 
-        const numBuilders   = _.sum(Game.creeps, (c) => c.memory.role === 'builder');
-        const numHarvesters = _.sum(Game.creeps, (c) => c.memory.role === 'harvester');
-        const numUpgraders  = _.sum(Game.creeps, (c) => c.memory.role === 'upgrader');
-        const superBuilder  = _.sum(Game.creeps, (c) => c.memory.role === 'superBuilder');
+        let numBuilders, numHarvesters, numUpgraders;
         let name = undefined;
+
+        // Check amount of creeps ever X amount of ticks
+        if (Game.time % 20 === 0) {
+            Memory.counts = {
+                numBuilders:   _.sum(Game.creeps, (c) => c.memory.role === 'builder'),
+                numHarvesters: _.sum(Game.creeps, (c) => c.memory.role === 'harvester'),
+                numUpgraders:  _.sum(Game.creeps, (c) => c.memory.role === 'upgrader')
+            }
+        }
+        else {
+            numBuilders   = Memory.counts.numBuilders;
+            numHarvesters = Memory.counts.numHarvesters;
+            numUpgraders  = Memory.counts.numUpgraders;
+        }
+
+        // Make new creeps if lower than minimums
         if (numHarvesters < minHarvesters) {
             Game.CLI.clearCreepMemory();
             Game.CLI.makeCreep('harvester');

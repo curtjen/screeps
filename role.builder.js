@@ -12,35 +12,35 @@ var roleBuilder = {
                         creep.moveTo(target[0]);
                     }
                 }
-    	    }
-    	    else {
-    	        const sources = creep.room.find(FIND_SOURCES);
-    	       // const sources = creep.pos.findNearest(Game.SOURCES);
-    	       //const source = creep.pos.findClosestByRange(FIND_SOURCES);
-    	       // const source  = 'source #c9e7c224cf869193c232a946';
-    	       // let source;
-    	       // if (creep.memory.source === 3) {
-    	       //     source = sources[3];
-    	       // }
-    	       // else {
-    	       //     source = sources;
-    	       // }
-    	       // const source = '[source #c739d6af552b367152de461b]';
-    	       // console.log(sources);
+            }
+            else {
+                const sources = creep.room.find(FIND_SOURCES);
+               // const sources = creep.pos.findNearest(Game.SOURCES);
+               //const source = creep.pos.findClosestByRange(FIND_SOURCES);
+               // const source  = 'source #c9e7c224cf869193c232a946';
+               // let source;
+               // if (creep.memory.source === 3) {
+               //     source = sources[3];
+               // }
+               // else {
+               //     source = sources;
+               // }
+               // const source = '[source #c739d6af552b367152de461b]';
+               // console.log(sources);
                 if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(sources[0]);
                 }
-    	    }
+            }
         }
 
-	    if(creep.memory.building && creep.carry.energy == 0) {
+        if(creep.memory.building && creep.carry.energy == 0) {
             creep.memory.building = false;
             creep.say('harvesting');
-	    }
-	    if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
-	        creep.memory.building = true;
-	        creep.say('building');
-	    }
+        }
+        if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.building = true;
+            creep.say('building');
+        }
 
         let targets = [];
         if (Game.flags.build) {
@@ -56,7 +56,7 @@ var roleBuilder = {
             targets = creep.room.find(FIND_CONSTRUCTION_SITES);
         }
         build(targets);
-	}
+    }
 };
 
 module.exports = roleBuilder;
